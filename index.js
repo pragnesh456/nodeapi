@@ -8,6 +8,14 @@ const fs = require('fs');
 
 // create express app
 const app = express();
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//       cb(null, './uploads')
+//     },
+//     filename: (req, file, cb) => {
+//       cb(null, file.fieldname + '-' + Date.now())
+//     }
+// });
 global.ROOT_PATH = __dirname;
 global.Multer = multer({
     dest: global.ROOT_PATH + '/uploads/'

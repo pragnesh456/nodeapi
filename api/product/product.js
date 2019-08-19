@@ -34,10 +34,18 @@ class Product{
 
     async addProduct(req, res){
         try {
-            // const product = await productModel(req.body);
-            console.log(req.files,req.filename,req.file);
-            console.log(req.body)
-            // await product.save();
+            const product = await productModel();
+            product.images.data = fs.readFileSync(req.file.path)
+            product.images.contentType = 'image/png';
+            product.product_id = req.body.product_id,
+            product.segment_id = req.body.segment_id,
+            product.video_url = req.body.video_url,
+            product.start_time = req.body.start_time,
+            product.end_time = req.body.end_time,
+            product.sequence_number = req.body.sequence_number,
+            product.isPublished = req.body.isPublished,
+            product.isArchive = req.body.isArchive,
+            await product.save();
             res.send({'Successful':'product Added Successful'})    
         } catch (e) {
             res.send({'Error':'Error Added product'}); 

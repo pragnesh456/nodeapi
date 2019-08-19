@@ -13,20 +13,25 @@ class ProductModel {
                 video_url:{
                     type:String
                 },
-                thumbnails_url:{
-                    type:String
-                },
                 start_time:{
                     type:String
                 },
-                stop_time:{
+                end_time:{
                     type:String
                 },
-                isReady:{
+                images:{
+                    data: Buffer, 
+                    contentType: String 
+                },
+                sequence_number:{
+                    type:Number
+                },
+                isPublished:{
+                    type:Boolean,
+                    default:false
+                },
+                isArchive:{
                     type:Boolean
-                },
-                sequance_id:{
-                    type:String
                 }
             },{
                 collection:'product',
