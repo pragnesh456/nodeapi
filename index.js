@@ -5,17 +5,9 @@ global.mongoose = require('mongoose');
 const multer = require('multer');
 const Api = require('./api');
 const fs = require('fs');
-
-// create express app
+const path = require('path');
 const app = express();
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//       cb(null, './uploads')
-//     },
-//     filename: (req, file, cb) => {
-//       cb(null, file.fieldname + '-' + Date.now())
-//     }
-// });
+
 global.ROOT_PATH = __dirname;
 global.Multer = multer({
     dest: global.ROOT_PATH + '/uploads/'
@@ -42,8 +34,7 @@ app.all('/*', function(req, res, next) {
 });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-
-// app.use(cors());
+app.use("/", express.static(__dirname));
 
 
 // listen for requests

@@ -20,8 +20,7 @@ class ProductModel {
                     type:String
                 },
                 images:{
-                    data: Buffer, 
-                    contentType: String 
+                    type:Array 
                 },
                 sequence_number:{
                     type:Number
