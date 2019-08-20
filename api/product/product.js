@@ -25,8 +25,10 @@ class Product{
     async getProductById(req,res){
         try {
             const product = await productModel.findById(req.params.id);
-            res.set("Content-Type", "image/png");
-            res.send(product.images.contentType);
+            if(!product){
+                throw new Error({'notFound':'product Not Found'})
+            }
+            res.send(product);
         } catch (error) {
             res.send({'Error':'Error getting product'});    
         }
@@ -38,7 +40,6 @@ class Product{
             const product = await productModel();
             for(let i=0;i<req.files.length;i++){
                 console.log(req.files[1].originalname)
-                // req.files[i].filename.push(product.images)
                 product.images.push(req.files[i].originalname)  
             }
             product.product_id = req.body.product_id,
@@ -61,7 +62,7 @@ class Product{
         const productId = req.params.id;
         try{
             if(!productId){
-                res.send({'notFound':'productId Not Found'});
+                throw new Error({'notFound':'productId Not Found'})
             }
             const product = await productModel.update({_id:productId}, {$set:req.body});
             if(product.ok === 0){
