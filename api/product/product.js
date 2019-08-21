@@ -1,15 +1,7 @@
 const prodctModelContructor =  require('./product-model');
 const productModel = new prodctModelContructor().model;
-const multer = require('multer');
 const fs = require('fs');
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads')
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now())
-    }
-  })
+
 class Product{
 
     async getProducts(req,res){
@@ -39,8 +31,7 @@ class Product{
         try {
             const product = await productModel();
             for(let i=0;i<req.files.length;i++){
-                console.log(req.files[1].originalname)
-                product.images.push(req.files[i].originalname)  
+                product.images.push(req.files[i].fieldname + '_' + Date.now())  
             }
             product.product_id = req.body.product_id,
             product.segment_id = req.body.segment_id,
@@ -64,7 +55,7 @@ class Product{
             if(!productId){
                 throw new Error({'notFound':'productId Not Found'})
             }
-            const product = await productModel.update({_id:productId}, {$set:req.body});
+            const product = await productModel.update({_id:product_id}, {$set:req.body});
             if(product.ok === 0){
                 throw new Error('Error getting product update')
             }

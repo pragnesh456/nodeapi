@@ -8,11 +8,18 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 
-global.ROOT_PATH = __dirname;
-global.Multer = multer({
-    dest: global.ROOT_PATH + '/uploads/'
-  });
   
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, './uploads')
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.filename + '_' + Date.now())
+    }
+});
+ global.upload = multer({storage: storage});
+
+
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -20,7 +27,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
 
-var upload = multer({ dest: './uploads' });
   
 // define a simple route
 app.get('/', (req, res) => {
