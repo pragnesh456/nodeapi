@@ -28,6 +28,21 @@ class Product{
      
     }
 
+
+    async getSegmentById(req,res){
+        try {
+            const segment = await productModel.findById(req.params.id);
+            if(!segment){
+                throw new Error({'notFound':'segment Not Found'})
+            }
+            res.send(segment);
+        } catch (error) {
+            res.send({'Error':'Error getting segment'});    
+        }
+     
+    }
+
+
     async addProduct(req, res){
         try {
             const product = await productModel();
