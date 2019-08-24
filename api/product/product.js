@@ -21,8 +21,7 @@ class Product{
                 throw new Error({'notFound':'product Not Found'})
             }
             const data = await productModel.find({'product_id': product.product_id});
-            // const obj = []
-            res.send(product);
+            res.send(data);
         } catch (error) {
             res.send({'Error':'Error getting product'});    
         }
