@@ -20,6 +20,8 @@ class Product{
             if(!product){
                 throw new Error({'notFound':'product Not Found'})
             }
+            const data = await productModel.find({'product_id': product.product_id});
+            // const obj = []
             res.send(product);
         } catch (error) {
             res.send({'Error':'Error getting product'});    
@@ -31,7 +33,7 @@ class Product{
         try {
             const product = await productModel();
             for(let i=0;i<req.files.length;i++){
-                product.images.push(req.files[i].fieldname + '_' + Date.now())  
+                product.images.push(req.files[i].originalname)  
             }
             product.product_id = req.body.product_id,
             product.segment_id = req.body.segment_id,
